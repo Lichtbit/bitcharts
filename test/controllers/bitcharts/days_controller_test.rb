@@ -7,10 +7,10 @@ module Bitcharts
     end
 
     test "should get day numbers of months" do
-      get :show, id: 'example'
+      get :show, id: 'example_1'
       assert_response :success
-      assert_includes response.body, '"labels":["Jan",'
-      assert_includes response.body, '"data":[31,28,31'
+      assert_includes response.body, '"labels":["2016-01-01","2016-01-02"'
+      assert_includes response.body, '"data":[20,31,0'
     end
 
   end
