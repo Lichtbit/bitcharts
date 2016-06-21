@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160621183434) do
+ActiveRecord::Schema.define(version: 20160621182604) do
 
   create_table "bitcharts_days", force: :cascade do |t|
-    t.date     "date"
-    t.string   "key"
-    t.integer  "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.date     "date",                   null: false
+    t.string   "key",        limit: 200, null: false
+    t.integer  "value",                  null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end
