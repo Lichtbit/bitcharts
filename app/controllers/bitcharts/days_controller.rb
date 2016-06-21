@@ -20,7 +20,23 @@ module Bitcharts
     end
 
     def date_range
-      Date.parse('2016-01-01')..Date.parse('2016-01-31')
+      from..to
+    end
+
+    def from
+      begin
+        Date.parse(params[:from])
+      rescue TypeError => e
+        Date.parse('2016-01-01')
+      end
+    end
+
+    def to
+      begin
+        Date.parse(params[:to])
+      rescue TypeError => e
+        Date.parse('2016-01-31')
+      end
     end
   end
 end
