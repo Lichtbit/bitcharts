@@ -24,19 +24,21 @@ module Bitcharts
     end
 
     def from
-      begin
-        Date.parse(params[:from])
-      rescue TypeError => e
-        Date.parse('2016-01-01')
-      end
+      to_date(params[:from], Date.today - 7.days)
     end
 
     def to
-      begin
-        Date.parse(params[:to])
-      rescue TypeError => e
-        Date.parse('2016-01-31')
+      to_date(params[:to], Date.today)
+    end
+
+    def to_date(date_string, fallback)
+      if date_string
+        begin
+          return Date.parse(date_string)
+        rescue TypeError => e
+        end
       end
+      fallback
     end
   end
 end
