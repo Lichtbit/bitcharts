@@ -2,11 +2,13 @@ require_dependency "bitcharts/application_controller"
 
 module Bitcharts
   class DaysController < ApplicationController
+    before_action :validate_chart
+    
     def show
       render json: { 
         labels: date_range.map(&:to_s),
         datasets: [
-          { label: params[:id], data: values }
+          { label: key, data: values }
         ]
       }
     end
@@ -15,8 +17,16 @@ module Bitcharts
 
     def values
       date_range.map do |date|
-        Day.where(date: date, key: params[:id]).sum(:value)
+        chart.value_for_range(date..date)
       end
+    end
+
+    def key
+      @key ||= params[:id] ? params[:id].to_sym : nil
+    end
+
+    def chart
+      @chart ||= Bitcharts::BaseChart.for_key(key)
     end
 
     def date_range
@@ -39,6 +49,12 @@ module Bitcharts
         end
       end
       fallback
+    end
+
+    def validate_chart
+      if chart.nil?
+        raise ActionController::RoutingError.new('Not found')
+      end
     end
   end
 end

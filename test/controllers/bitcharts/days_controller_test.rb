@@ -4,6 +4,8 @@ module Bitcharts
   class DaysControllerTest < ActionController::TestCase
     setup do
       @routes = Engine.routes
+      DayChart
+      DayCreationChart
     end
 
     test "should return labels and values for the last 7 days" do
