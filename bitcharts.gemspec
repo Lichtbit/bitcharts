@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = Bitcharts::VERSION
   s.authors     = ["Sebastian Gaul"]
   s.email       = ["sebastian@mgvmedia.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Bitcharts."
-  s.description = "TODO: Description of Bitcharts."
+  s.homepage    = "http://lichtbit.com"
+  s.summary     = "Bitcharts"
+  s.description = s.summary
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
