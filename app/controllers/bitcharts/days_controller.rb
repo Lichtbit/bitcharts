@@ -37,23 +37,25 @@ module Bitcharts
         begin
           begin_date += interval
           end_date   += interval
-          ranges << (begin_date..(end_date - 1.day))
-        end while end_date < to
+          ranges << (begin_date..end_date)
+        end while end_date <= to
         ranges
       end
     end
 
     def interval
-      p = params[:interval]
-      if p.present?
-        interval = 0.days
-        p.scan(/(\d+) days?/  ).each { |el| interval += el.first.to_i.days   }
-        p.scan(/(\d+) weeks?/ ).each { |el| interval += el.first.to_i.weeks  }
-        p.scan(/(\d+) months?/).each { |el| interval += el.first.to_i.months }
-        p.scan(/(\d+) years?/ ).each { |el| interval += el.first.to_i.years  }
-        return interval unless interval <= 0.days
+      @interval ||= begin
+        p = params[:interval]
+        if p.present?
+          interval = 0.days
+          p.scan(/(\d+) days?/  ).each { |el| interval += el.first.to_i.days   }
+          p.scan(/(\d+) weeks?/ ).each { |el| interval += el.first.to_i.weeks  }
+          p.scan(/(\d+) months?/).each { |el| interval += el.first.to_i.months }
+          p.scan(/(\d+) years?/ ).each { |el| interval += el.first.to_i.years  }
+          return interval unless interval < 1.day
+        end
+        1.day
       end
-      1.day
     end
 
     def from
