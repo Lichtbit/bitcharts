@@ -17,7 +17,7 @@ module Bitcharts
 
     def values
       date_range.map do |date|
-        chart.value_for_range(date..date)
+        chart.value_for_date_range(date..date)
       end
     end
 

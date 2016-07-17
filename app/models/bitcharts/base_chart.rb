@@ -14,7 +14,7 @@ module Bitcharts
       end
     end
 
-    def value_for_range(date_range)
+    def value_for_date_range(date_range)
       start_time = date_range.begin.beginning_of_day
       end_time = date_range.end.end_of_day
       value_for_time_range(start_time..end_time)
