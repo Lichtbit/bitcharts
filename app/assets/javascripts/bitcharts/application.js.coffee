@@ -6,6 +6,9 @@ $ ->
   $('canvas[data-bitchart]').each ->
     canvas = $(this)
     id = canvas.data('bitchart')
-    $.get "/bitcharts/days/#{id}.json", (response) ->
+    data =
+      from: canvas.data('bitchart-from')
+      to:   canvas.data('bitchart-to')
+    $.get "/bitcharts/days/#{id}.json", data, (response) ->
       if Array.isArray(response.datasets)
         chart = new Chart(canvas, type: 'line', data: response)
