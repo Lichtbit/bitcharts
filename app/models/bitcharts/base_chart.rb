@@ -3,6 +3,7 @@ module Bitcharts
     class << self
       def has_key(key)
         chart_types[key] = self
+        define_method(:key) { key }
       end
 
       def chart_types
@@ -12,6 +13,10 @@ module Bitcharts
       def for_key(key)
         chart_types[key].try(:new)
       end
+    end
+
+    def label
+      key
     end
 
     def value_for_date_range(date_range)

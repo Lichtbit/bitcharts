@@ -8,7 +8,7 @@ module Bitcharts
       render json: { 
         labels: date_ranges.map(&:begin).map(&:to_s),
         datasets: [
-          { label: key, data: values }
+          { label: chart.label, data: values }
         ]
       }
     end
