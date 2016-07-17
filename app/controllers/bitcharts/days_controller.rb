@@ -6,7 +6,7 @@ module Bitcharts
     
     def show
       render json: { 
-        labels: date_range.map(&:to_s),
+        labels: date_ranges.map(&:begin).map(&:to_s),
         datasets: [
           { label: key, data: values }
         ]
@@ -16,8 +16,8 @@ module Bitcharts
     private
 
     def values
-      date_range.map do |date|
-        chart.value_for_date_range(date..date)
+      date_ranges.map do |range|
+        chart.value_for_date_range(range)
       end
     end
 
@@ -29,8 +29,31 @@ module Bitcharts
       @chart ||= Bitcharts::BaseChart.for_key(key)
     end
 
-    def date_range
-      from..to
+    def date_ranges
+      @date_ranges ||= begin
+        ranges = []
+        begin_date = from - interval
+        end_date   = from
+        begin
+          begin_date += interval
+          end_date   += interval
+          ranges << (begin_date..(end_date - 1.day))
+        end while end_date < to
+        ranges
+      end
+    end
+
+    def interval
+      p = params[:interval]
+      if p.present?
+        interval = 0.days
+        p.scan(/(\d+) days?/  ).each { |el| interval += el.first.to_i.days   }
+        p.scan(/(\d+) weeks?/ ).each { |el| interval += el.first.to_i.weeks  }
+        p.scan(/(\d+) months?/).each { |el| interval += el.first.to_i.months }
+        p.scan(/(\d+) years?/ ).each { |el| interval += el.first.to_i.years  }
+        return interval unless interval <= 0.days
+      end
+      1.day
     end
 
     def from
