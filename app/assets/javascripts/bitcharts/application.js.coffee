@@ -7,6 +7,7 @@ Bitcharts =
   defaultColorsString: '#78AEEB #55B662 #CB4FBA'
   defaultCornerRadius: 0
   defaultTension:      0.0
+  defaultType:         'line'
 
   hexToRgba: (hex, opacity) ->
     hex = hex.replace('#', '')
@@ -22,6 +23,8 @@ Bitcharts =
     lineDefaults.tension = Bitcharts.defaultTension
     pointDefaults = Chart.defaults.global.elements.point
     pointDefaults.borderWidth = Bitcharts.defaultBorderWidth
+    rectangleDefaults = Chart.defaults.global.elements.rectangle
+    rectangleDefaults.borderWidth = Bitcharts.defaultBorderWidth
     tooltipDefaults = Chart.defaults.global.tooltips
     tooltipDefaults.cornerRadius = Bitcharts.defaultCornerRadius
 
@@ -41,6 +44,7 @@ $ ->
     id     = canvas.data('bitchart')
     colors = canvas.data('bitchart-colors') || Bitcharts.defaultColorsString
     colors = colors.split(' ')
+    type   = canvas.data('bitchart-type') || Bitcharts.defaultType
     data   =
       from:     canvas.data('bitchart-from')
       to:       canvas.data('bitchart-to')
@@ -50,4 +54,4 @@ $ ->
         for color, index in colors
           break unless response.datasets[index]
           Bitcharts.styleDataset(response.datasets[index], color)
-        chart = new Chart(canvas, type: 'line', data: response)
+        chart = new Chart(canvas, type: type, data: response)
