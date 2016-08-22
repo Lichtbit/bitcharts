@@ -7,26 +7,26 @@ module Bitcharts
     def show
       render json: { 
         labels: date_ranges.map(&:begin).map(&:to_s),
-        datasets: [
-          { label: chart.label, data: values }
-        ]
+        datasets: charts.map do |chart|
+          { label: chart.label, data: values(chart) }
+        end
       }
     end
 
     private
 
-    def values
+    def values(chart)
       date_ranges.map do |range|
         chart.value_for_date_range(range)
       end
     end
 
-    def key
-      @key ||= params[:id] ? params[:id].to_sym : nil
+    def keys
+      @keys ||= params[:id].split(' ').map(&:to_sym)
     end
 
-    def chart
-      @chart ||= Bitcharts::BaseChart.for_key(key)
+    def charts
+      @charts ||= keys.map { |key| Bitcharts::BaseChart.for_key(key) }
     end
 
     def date_ranges
@@ -77,7 +77,7 @@ module Bitcharts
     end
 
     def validate_chart
-      if chart.nil?
+      if charts.empty? || charts.any?(&:nil?)
         raise ActionController::RoutingError.new('Not found')
       end
     end
