@@ -5,6 +5,7 @@ Bitcharts =
 
   defaultBorderWidth:  2
   defaultColorsString: '#78AEEB #55B662 #CB4FBA'
+  defaultCornerRadius: 0
   defaultTension:      0.0
 
   hexToRgba: (hex, opacity) ->
@@ -21,6 +22,8 @@ Bitcharts =
     lineDefaults.tension = Bitcharts.defaultTension
     pointDefaults = Chart.defaults.global.elements.point
     pointDefaults.borderWidth = Bitcharts.defaultBorderWidth
+    tooltipDefaults = Chart.defaults.global.tooltips
+    tooltipDefaults.cornerRadius = Bitcharts.defaultCornerRadius
 
   styleDataset: (dataset, color) ->
     dataset.borderColor          = color
