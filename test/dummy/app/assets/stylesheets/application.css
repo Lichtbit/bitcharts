@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+.container {
+  display: inline-block;
+  width: 48%;
+}
+
+.container:nth-child(odd) {
+  margin-left: 2%; 
+}
