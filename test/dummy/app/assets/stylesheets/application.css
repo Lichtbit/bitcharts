@@ -22,3 +22,8 @@
 .container:nth-child(odd) {
   margin-left: 2%; 
 }
+
+.bg {
+  background: #F9EAC8;
+  padding: 10px;
+}

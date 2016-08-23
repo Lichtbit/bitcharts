@@ -1,9 +1,13 @@
 <h1>Bitcharts for Rails</h1>
 
 <div class="container">
-  <canvas class="bitchart" data-bitchart="example_2 example_1" data-bitchart-type="bar" data-bitchart-colors="#E72F79 #E76F2F"></canvas>
+  <%= bitchart 'example_2 example_1', type: :bar, colors: '#E72F79 #E76F2F' %>
 </div>
 
 <div class="container">
-  <canvas class="bitchart" data-bitchart="example_1" data-bitchart-from="<%= Date.today - 6.weeks %>" data-bitchart-to="<%= Date.today + 8.weeks %>" data-bitchart-interval="1 week"></canvas>
+  <%= bitchart 'example_1', from: 6.weeks.ago, to: 8.weeks.from_now, interval: 1.week %>
+</div>
+
+<div class="container">
+  <%= bitchart 'example_1', class: 'bg', interval: 2.days, type: :bar %>
 </div>
