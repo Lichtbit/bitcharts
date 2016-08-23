@@ -2,6 +2,14 @@ class DayChart < Bitcharts::BaseChart
   has_key :example_1
   has_scope
 
+  def label
+    'Erstes Beispiel'
+  end
+
+  def scoped_label(scope)
+    "#{label} + #{scope}"
+  end
+
   def value(date_range)
     base_relation(date_range).sum(:value)
   end

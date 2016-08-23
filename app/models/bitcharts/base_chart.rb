@@ -29,6 +29,10 @@ module Bitcharts
       key
     end
 
+    def scoped_label(scope)
+      "#{key}[#{scope}]"
+    end
+
     def value_for_date_range(date_range)
       value(date_range)
     end

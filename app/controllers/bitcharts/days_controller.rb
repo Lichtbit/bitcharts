@@ -13,7 +13,7 @@ module Bitcharts
             { label: chart.label, data: values(chart) }
           else
             scope = chart_and_scope.second
-            { label: chart.label, data: scoped_values(chart, scope) }
+            { label: chart.scoped_label(scope), data: scoped_values(chart, scope) }
           end
         end
       }
