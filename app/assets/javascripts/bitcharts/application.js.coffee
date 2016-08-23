@@ -1,13 +1,14 @@
 #= require jquery
 #= require chart.min.js
 
-Bitcharts =
+@Bitcharts = Bitcharts =
 
   defaultBorderWidth:  2
   defaultColorsString: '#78AEEB #55B662 #CB4FBA'
   defaultCornerRadius: 0
   defaultTension:      0.0
   defaultType:         'line'
+  defaultLinearScale:  ticks: { suggestedMin: 0 }
 
   hexToRgba: (hex, opacity) ->
     hex = hex.replace('#', '')
@@ -27,6 +28,7 @@ Bitcharts =
     rectangleDefaults.borderWidth = Bitcharts.defaultBorderWidth
     tooltipDefaults = Chart.defaults.global.tooltips
     tooltipDefaults.cornerRadius = Bitcharts.defaultCornerRadius
+    Chart.scaleService.updateScaleDefaults('linear', Bitcharts.defaultLinearScale)
 
   styleDataset: (dataset, color) ->
     dataset.borderColor          = color
