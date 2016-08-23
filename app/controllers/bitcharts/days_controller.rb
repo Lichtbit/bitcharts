@@ -7,8 +7,14 @@ module Bitcharts
     def show
       render json: { 
         labels: date_ranges.map(&:begin).map(&:to_s),
-        datasets: charts.map do |chart|
-          { label: chart.label, data: values(chart) }
+        datasets: chart_scope_pairs.map do |chart_and_scope|
+          chart = chart_and_scope.first
+          if chart_and_scope.size == 1
+            { label: chart.label, data: values(chart) }
+          else
+            scope = chart_and_scope.second
+            { label: chart.label, data: scoped_values(chart, scope) }
+          end
         end
       }
     end
@@ -21,12 +27,25 @@ module Bitcharts
       end
     end
 
-    def keys
-      @keys ||= params[:id].split(' ').map(&:to_sym)
+    def scoped_values(chart, scope)
+      date_ranges.map do |range|
+        chart.scoped_value_for_date_range(range, scope)
+      end
     end
 
-    def charts
-      @charts ||= keys.map { |key| Bitcharts::BaseChart.for_key(key) }
+    def chart_scope_pairs
+      @keys ||= begin
+        params[:id].split(' ').map do |key|
+          match = key.match(/([[:alnum:]_]+)\[([[:alnum:]_]+)\]/)
+          if match
+            key = match[1]
+            scope = match[2]
+            [Bitcharts::BaseChart.for_key(key.to_sym), scope]
+          else
+            [Bitcharts::BaseChart.for_key(key.to_sym)]
+          end
+        end
+      end
     end
 
     def date_ranges
@@ -77,6 +96,7 @@ module Bitcharts
     end
 
     def validate_chart
+      charts = chart_scope_pairs.map(&:first)
       if charts.empty? || charts.any?(&:nil?)
         raise ActionController::RoutingError.new('Not found')
       end

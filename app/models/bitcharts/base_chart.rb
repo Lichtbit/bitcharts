@@ -13,6 +13,16 @@ module Bitcharts
       def for_key(key)
         chart_types[key].try(:new)
       end
+
+      def has_scope
+        define_method(:scoped_value_for_date_range) do |date_range, scope|
+          scoped_value(date_range, scope)
+        end
+
+        define_method(:scoped_value) do |date_range, scope|
+          raise 'Chart must implement #scoped_value(date_range, scope)'
+        end
+      end
     end
 
     def label

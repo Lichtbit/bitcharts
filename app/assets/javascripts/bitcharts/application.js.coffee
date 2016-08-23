@@ -41,7 +41,7 @@ $ ->
 
   $('canvas[data-bitchart]').each ->
     canvas = $(this)
-    id     = canvas.data('bitchart')
+    keys   = canvas.data('bitchart')
     colors = canvas.data('bitchart-colors') || Bitcharts.defaultColorsString
     colors = colors.split(' ')
     type   = canvas.data('bitchart-type') || Bitcharts.defaultType
@@ -49,7 +49,7 @@ $ ->
       from:     canvas.data('bitchart-from')
       to:       canvas.data('bitchart-to')
       interval: canvas.data('bitchart-interval')
-    $.get "/bitcharts/days/#{id}.json", data, (response) ->
+    $.get "/bitcharts/days/#{encodeURIComponent(keys)}.json", data, (response) ->
       if Array.isArray(response.datasets)
         for color, index in colors
           break unless response.datasets[index]
