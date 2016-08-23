@@ -15,7 +15,7 @@ class <%= class_name %>Chart < Bitcharts::BaseChart
   end
 
   def scoped_value(date_range, scope)
-    base(date_range).where(association_id: scope).count
+    base(date_range).where(association_id: scope.to_id).count
   end
 
   protected

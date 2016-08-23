@@ -39,7 +39,7 @@ module Bitcharts
           match = key.match(/([[:alnum:]_]+)\[([[:alnum:]_]+)\]/)
           if match
             key = match[1]
-            scope = match[2]
+            scope = Scope.new(match[2])
             [Bitcharts::BaseChart.for_key(key.to_sym), scope]
           else
             [Bitcharts::BaseChart.for_key(key.to_sym)]
