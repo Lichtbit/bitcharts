@@ -4,7 +4,7 @@
 @Bitcharts = Bitcharts =
 
   defaultBorderWidth:  2
-  defaultColorsString: '#78AEEB #55B662 #CB4FBA'
+  defaultColorsString: '#78AEEB #CF75C3 #55B662 #FFAE65'
   defaultCornerRadius: 0
   defaultTension:      0.0
   defaultType:         'line'
