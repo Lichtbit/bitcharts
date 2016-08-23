@@ -1,0 +1,8 @@
+Description:
+    Generates a chart with scope support
+
+Example:
+    rails generate scoped_chart users/logins
+
+    This will create:
+        app/charts/users/logins_chart.rb
