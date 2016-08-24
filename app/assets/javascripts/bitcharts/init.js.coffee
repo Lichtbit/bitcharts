@@ -1,6 +1,3 @@
-#= require jquery
-#= require chart.min.js
-
 @Bitcharts = Bitcharts =
 
   defaultBorderWidth:  2

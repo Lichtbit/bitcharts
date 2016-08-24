@@ -1,19 +1,33 @@
-= Bitcharts =
+= Bitcharts
 
-== Usage ==
+== Usage
 
-1. Generate a chart
+=== Mount Engine in `routes.rb`
 
-~~~
-rails g bitcharts:chart user_logins
-# or a scoped chart:
-rails g bitcharts:scoped_chart user_logins
-~~~
+  mount Bitcharts::Engine => "/bitcharts"
 
-2. Implement chart's value method in `app/charts/user_logins_chart.rb`
-3. Include canvas into your view
+=== Generate a chart
 
-~~~
-<%= bitchart 'user_logins', from: 7.days.ago, to: Date.today %>
-<%# Check Bitcharts::ApplicationHelper for more options %>
-~~~
+  rails g bitcharts:chart user_logins
+  # or a scoped chart:
+  rails g bitcharts:scoped_chart user_logins
+
+=== Implement chart's value method in `app/charts/user_logins_chart.rb`
+
+  def value(date_range)
+    User::Login.where(created_at: date_range).count
+  end
+
+=== Add canvas to your view
+
+  <%= bitchart 'user_logins', from: 7.days.ago, to: Date.today %>
+
+Check `Bitcharts::ApplicationHelper` for all available options.
+
+=== Add Javascript
+
+Require Javascript in your applications Javascript or load it dynamically in your view when needed:
+
+  <%= javascript_include_tag 'bitcharts/default' %>
+
+If you don't use jQuery already use `bitcharts/full` instead.
