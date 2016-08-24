@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.version     = Bitcharts::VERSION
   s.authors     = ["Sebastian Gaul"]
   s.email       = ["sebastian@mgvmedia.com"]
-  s.homepage    = "http://lichtbit.com"
-  s.summary     = "Bitcharts"
+  s.homepage    = "https://github.com/Lichtbit/bitcharts"
+  s.summary     = "Charts for Rails"
   s.description = s.summary
   s.license     = "MIT"
 
