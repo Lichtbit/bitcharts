@@ -20,7 +20,7 @@ module Bitcharts
       get :show, id: 'example_1', from: '2015-12-31', to: '2016-01-01'
       assert_response :success
       assert_includes response.body, '"labels":["2015-12-31","2016-01-01"]'
-      assert_includes response.body, '"data":[0,20]'
+      assert_includes response.body, '"data":[20,51]'
     end
 
     test "should ignore invalid dates" do
