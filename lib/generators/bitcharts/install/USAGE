@@ -1,0 +1,8 @@
+Description:
+    Install Bitcharts
+
+Example:
+    rails generate install
+
+    This will create:
+        config/initializers/bitcharts.rb

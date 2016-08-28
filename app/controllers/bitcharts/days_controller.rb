@@ -5,6 +5,7 @@ module Bitcharts
     before_action :validate_chart
     
     def show
+      instance_exec(&Bitcharts.authorize_request)
       render json: { 
         labels: date_ranges.map(&:begin).map(&:to_s),
         datasets: chart_scope_pairs.map do |chart_and_scope|
@@ -95,8 +96,11 @@ module Bitcharts
       fallback
     end
 
+    def charts
+      chart_scope_pairs.map(&:first)
+    end
+
     def validate_chart
-      charts = chart_scope_pairs.map(&:first)
       if charts.empty? || charts.any?(&:nil?)
         raise ActionController::RoutingError.new('Not found')
       end

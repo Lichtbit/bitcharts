@@ -1,5 +1,5 @@
 module Bitcharts
-  class ApplicationController < ActionController::Base
+  class ApplicationController < Bitcharts.application_controller_class
     before_action :load_charts unless Rails.configuration.eager_load
 
     def load_paths
