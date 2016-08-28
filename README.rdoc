@@ -33,3 +33,9 @@ Require Javascript in your applications Javascript or load it dynamically in you
   <%= javascript_include_tag 'bitcharts/default' %>
 
 If you don't use jQuery already use +bitcharts/full+ instead.
+
+=== Authorization
+
+  rails g bitcharts:install
+
+This generates an initializer that shows you how to authorize with CanCan(Can) based on the chart's class name. Adopt it as needed.
