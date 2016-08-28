@@ -1,11 +1,12 @@
 @Bitcharts = Bitcharts =
 
-  defaultBorderWidth:  2
-  defaultColorsString: '#78AEEB #CF75C3 #55B662 #FFAE65'
-  defaultCornerRadius: 0
-  defaultTension:      0.0
-  defaultType:         'line'
-  defaultLinearScale:  ticks: { suggestedMin: 0 }
+  defaultBorderWidth:   2
+  defaultColorsString:  '#78AEEB #CF75C3 #55B662 #FFAE65'
+  defaultCornerRadius:  0
+  defaultLegendDisplay: true
+  defaultTension:       0.0
+  defaultType:          'line'
+  defaultLinearScale:   ticks: { suggestedMin: 0 }
 
   hexToRgba: (hex, opacity) ->
     hex = hex.replace('#', '')
@@ -15,7 +16,7 @@
     'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')'
 
   setDefaultStyle: ->
-    Chart.defaults.global.legend.display = false
+    Chart.defaults.global.legend.display = Bitcharts.defaultLegendDisplay
     lineDefaults = Chart.defaults.global.elements.line
     lineDefaults.borderWidth = Bitcharts.defaultBorderWidth
     lineDefaults.tension = Bitcharts.defaultTension
@@ -33,6 +34,14 @@
     dataset.backgroundColor      = Bitcharts.hexToRgba(color, 0.25)
     dataset.pointBackgroundColor = color
 
+  toBoolean: (string) ->
+    if string == 'true' || string == 'on'
+      return true
+    if string == 'false' || string == 'off'
+      return false
+    console.log 'undefined'
+    undefined
+
 
 $ ->
 
@@ -43,14 +52,17 @@ $ ->
     keys   = canvas.data('bitchart')
     colors = canvas.data('bitchart-colors') || Bitcharts.defaultColorsString
     colors = colors.split(' ')
+    legend = Bitcharts.toBoolean(canvas.data('bitchart-legend'))
+    legend = Bitcharts.defaultLegendDisplay unless legend?
     type   = canvas.data('bitchart-type') || Bitcharts.defaultType
     data   =
       from:     canvas.data('bitchart-from')
       to:       canvas.data('bitchart-to')
       interval: canvas.data('bitchart-interval')
+
     $.get "/bitcharts/days/#{encodeURIComponent(keys)}.json", data, (response) ->
       if Array.isArray(response.datasets)
         for color, index in colors
           break unless response.datasets[index]
           Bitcharts.styleDataset(response.datasets[index], color)
-        chart = new Chart(canvas, type: type, data: response)
+        chart = new Chart(canvas, type: type, data: response, options: { legend: { display: legend } })
