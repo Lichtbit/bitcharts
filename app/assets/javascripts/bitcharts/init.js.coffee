@@ -31,7 +31,7 @@
     dataset.borderColor          = color
     dataset.pointBorderColor     = color
     dataset.backgroundColor      = Bitcharts.hexToRgba(color, 0.25)
-    dataset.pointBackgroundColor = '#FFFFFF'
+    dataset.pointBackgroundColor = color
 
 
 $ ->
